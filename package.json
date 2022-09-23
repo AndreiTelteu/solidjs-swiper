@@ -1,0 +1,25 @@
+{
+  "name": "solidjs-swiper",
+  "version": "1.0.0",
+  "description": "A simple image swiper built in Solid-JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreiTelteu/solidjs-swiper.git"
+  },
+  "keywords": [
+    "solidjs",
+    "swiper",
+    "swiperjs",
+    "astro"
+  ],
+  "author": "Andrei Telteu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AndreiTelteu/solidjs-swiper/issues"
+  },
+  "homepage": "https://github.com/AndreiTelteu/solidjs-swiper#readme"
+}
