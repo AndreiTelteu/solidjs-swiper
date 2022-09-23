@@ -24,15 +24,21 @@ export const Swiper: Component = (attrs: any) => {
     items().forEach((item: any, index: any) => {
       itemsEl[index] = document.getElementById('swiper-slide-' + index);
     });
+    refreshActive();
   });
-  createEffect(() => {
-    offset = (itemsEl[0]?.clientWidth || 0) * activeSlide();
-    setOffset(offset, true);
-  });
+  
   let wrapperEl: any;
   onMount(() => {
     wrapperEl = document.getElementById('swiper-wrapper');
   });
+
+  const refreshActive = () => {
+    console.log('refreshActive', { w: itemsEl[0]?.clientWidth });
+    offset = (itemsEl[0]?.clientWidth || 0) * activeSlide();
+    setOffset(offset, true);
+  };
+  createEffect(() => setActiveSlide(props?.index));
+  createEffect(() => refreshActive());
 
   let offset = 0;
   const setOffset = (value: any, animated: boolean = true) => {
