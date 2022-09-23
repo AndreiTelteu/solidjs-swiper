@@ -7,9 +7,8 @@ import {
   createEffect,
   onMount,
 } from 'solid-js';
-import './swiper.css';
 
-const Swiper: Component = (attrs: any) => {
+export const Swiper: Component = (attrs: any) => {
   const swiperSlide = children(() => attrs.children);
   const [props, rest] = splitProps(attrs, ['items', 'threshold', 'index']);
   const items = () => props?.items || [];
@@ -109,8 +108,36 @@ const Swiper: Component = (attrs: any) => {
           />
         </div>
       </div>
+      <style>{`
+        .swiper-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+          flex-wrap: nowrap;
+          overflow: hidden;
+        }
+        .swiper-wrapper {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          flex-shrink: 0;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+          flex-wrap: nowrap;
+          transition: transform 0ms ease-in-out;
+          transform: translateX(-0px);
+        }
+        .swiper-slide {
+          flex-shrink: 0;
+          width: 100%;
+        }
+      `}</style>
     </>
   );
 };
-
-export default Swiper;
