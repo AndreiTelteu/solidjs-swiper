@@ -10,9 +10,8 @@ import {
 
 export const Swiper: Component = (attrs: any) => {
   const swiperSlide = children(() => attrs.children);
-  const [props, rest] = splitProps(attrs, ['items', 'threshold', 'index']);
+  const [props, rest] = splitProps(attrs, ['items', 'threshold', 'index', 'onReady']);
   const items = () => props?.items || [];
-  const itemsEl: any = {};
   const threshold = () => props?.threshold || 80;
   const [activeSlide, setActiveSlide] = createSignal(props?.index || 0);
   const state = {
@@ -20,25 +19,18 @@ export const Swiper: Component = (attrs: any) => {
     start: [0, 0],
     end: [0, 0],
   };
-  createEffect(() => {
-    items().forEach((item: any, index: any) => {
-      itemsEl[index] = document.getElementById('swiper-slide-' + index);
-    });
-    refreshActive();
-  });
-  
+
   let wrapperEl: any;
-  onMount(() => {
-    wrapperEl = document.getElementById('swiper-wrapper');
-  });
+  const itemsEl: any = {};
 
   const refreshActive = () => {
-    console.log('refreshActive', { w: itemsEl[0]?.clientWidth });
     offset = (itemsEl[0]?.clientWidth || 0) * activeSlide();
     setOffset(offset, true);
   };
-  createEffect(() => setActiveSlide(props?.index));
-  createEffect(() => refreshActive());
+  createEffect(() => setActiveSlide(props?.index || 0));
+  createEffect(() => {
+    items() && refreshActive();
+  });
 
   let offset = 0;
   const setOffset = (value: any, animated: boolean = true) => {
@@ -67,6 +59,12 @@ export const Swiper: Component = (attrs: any) => {
     setActiveSlide(slide);
     return true;
   };
+  onMount(() => {
+    props?.onReady?.({
+      next: () => next(),
+      prev: () => prev()
+    });
+  });
 
   const events = {
     onMouseDown: (event: any) => {
@@ -103,11 +101,11 @@ export const Swiper: Component = (attrs: any) => {
       <button onClick={() => prev()}>prev</button>
       <button onClick={() => next()}>next</button>
       <div class="swiper-container">
-        <div class="swiper-wrapper" id="swiper-wrapper" {...events}>
+        <div class="swiper-wrapper" ref={wrapperEl} {...events}>
           <For
             each={items()}
             children={(item: any, index: any) => (
-              <div class="swiper-slide" id={'swiper-slide-' + index()}>
+              <div class="swiper-slide" ref={(el) => (itemsEl[index()] = el)}>
                 {(swiperSlide() as any)(item)}
               </div>
             )}
