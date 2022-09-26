@@ -18,7 +18,7 @@ yarn add solidjs-swiper
 
 ```tsx
 import { JSX, createSignal } from 'solid-js';
-import { Swiper } from '../../src/index';
+import { Swiper } from 'solidjs-swiper';
 
 export default function App(): JSX.Element {
   const [pictures, setPictures] = createSignal([
