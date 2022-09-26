@@ -1,5 +1,5 @@
 import {
-  Component,
+  JSX,
   createSignal,
   For,
   children,
@@ -8,7 +8,7 @@ import {
   onMount,
 } from 'solid-js';
 
-export const Swiper: Component = (attrs: any) => {
+export function Swiper(attrs: any): JSX.Element {
   const swiperSlide = children(() => attrs.children);
   const [props, rest] = splitProps(attrs, ['items', 'threshold', 'index', 'onReady']);
   const items = () => props?.items || [];
@@ -96,10 +96,6 @@ export const Swiper: Component = (attrs: any) => {
 
   return (
     <>
-      active slide: {activeSlide()}
-      <br />
-      <button onClick={() => prev()}>prev</button>
-      <button onClick={() => next()}>next</button>
       <div class="swiper-container">
         <div class="swiper-wrapper" ref={wrapperEl} {...events}>
           <For

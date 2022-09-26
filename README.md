@@ -15,11 +15,11 @@ yarn add solidjs-swiper
 
 ## Usage example
 
-```js
-import { Component, createSignal } from "solid-js";
+```tsx
+import { JSX, createSignal } from "solid-js";
 import { Swiper } from 'solidjs-swiper';
 
-const App: Component = () => {
+export default function App(): JSX.Element {
   const [pictures, setPictures] = createSignal([
     { img: "https://picsum.photos/id/10/400/200"  },
     { img: "https://picsum.photos/id/1/400/200"   },
