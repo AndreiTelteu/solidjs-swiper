@@ -1,12 +1,4 @@
-import {
-  JSX,
-  createSignal,
-  For,
-  children,
-  splitProps,
-  createEffect,
-  onMount,
-} from 'solid-js';
+import { JSX, createSignal, For, children, splitProps, createEffect, onMount } from 'solid-js';
 
 export function Swiper(attrs: any): JSX.Element {
   const swiperSlide = children(() => attrs.children);
@@ -62,7 +54,7 @@ export function Swiper(attrs: any): JSX.Element {
   onMount(() => {
     props?.onReady?.({
       next: () => next(),
-      prev: () => prev()
+      prev: () => prev(),
     });
   });
 
@@ -140,4 +132,4 @@ export function Swiper(attrs: any): JSX.Element {
       `}</style>
     </>
   );
-};
+}

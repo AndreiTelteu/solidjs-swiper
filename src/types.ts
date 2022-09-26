@@ -1,2 +1,1 @@
-
-export type SwiperItem = any
+export type SwiperItem = any;
