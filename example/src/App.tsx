@@ -17,14 +17,16 @@ export default function App(): JSX.Element {
     <div style="width: 400px">
       <Swiper
         items={pictures()}
-        index={index()}
+        // index={index()}
         onReady={(api) => {
           swiperApi = api;
         }}
+        onChange={(i) => setIndex(i)}
         children={(item: any) => (
           <img src={item.img} alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
         )}
       />
+      Active index: {index()}
     </div>
   );
 }

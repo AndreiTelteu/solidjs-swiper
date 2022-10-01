@@ -2,7 +2,7 @@ import { JSX, createSignal, For, children, splitProps, createEffect, onMount } f
 
 export function Swiper(attrs: any): JSX.Element {
   const swiperSlide = children(() => attrs.children);
-  const [props, rest] = splitProps(attrs, ['items', 'threshold', 'index', 'onReady']);
+  const [props, rest] = splitProps(attrs, ['items', 'threshold', 'index', 'onReady', 'onChange']);
   const items = () => props?.items || [];
   const threshold = () => props?.threshold || 80;
   const [activeSlide, setActiveSlide] = createSignal(props?.index || 0);
@@ -22,6 +22,9 @@ export function Swiper(attrs: any): JSX.Element {
   createEffect(() => setActiveSlide(props?.index || 0));
   createEffect(() => {
     items() && refreshActive();
+  });
+  createEffect(() => {
+    props.onChange?.(activeSlide());
   });
 
   let offset = 0;

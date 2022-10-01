@@ -55,5 +55,6 @@ export default function App(): JSX.Element {
 | :------- | :------------------------------------------------- |
 | ✅       | First version out 🎉🥳                             |
 | ✅       | Export api with `prev` and `next` methods          |
+| ✅       | Add `onChange` event                               |
 | &#x2610; | Autoplay with delay config and stop on interaction |
 | &#x2610; | Support for loop                                   |
