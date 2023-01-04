@@ -1,7 +1,8 @@
-import { JSX, createSignal, For, children, splitProps, createEffect, onMount } from 'solid-js';
+import { createSignal, For, children, splitProps, createEffect, onMount, JSX } from 'solid-js';
+import { OnReadyApi, SwiperItemsElements, SwiperProps } from './types';
 
-export function Swiper(attrs: any): JSX.Element {
-  const swiperSlide = children(() => attrs.children);
+export default function Swiper<P extends readonly any[], I extends JSX.Element>(attrs: SwiperProps<P, I>) {
+  // const swiperSlide = children(() => attrs.children);
   const [props, rest] = splitProps(attrs, ['items', 'threshold', 'index', 'onReady', 'onChange']);
   const items = () => props?.items || [];
   const threshold = () => props?.threshold || 80;
@@ -12,8 +13,8 @@ export function Swiper(attrs: any): JSX.Element {
     end: [0, 0],
   };
 
-  let wrapperEl: any;
-  const itemsEl: any = {};
+  let wrapperEl: HTMLDivElement;
+  const itemsEl: SwiperItemsElements = {};
 
   const refreshActive = () => {
     offset = (itemsEl[0]?.clientWidth || 0) * activeSlide();
@@ -28,7 +29,7 @@ export function Swiper(attrs: any): JSX.Element {
   });
 
   let offset = 0;
-  const setOffset = (value: any, animated: boolean = true) => {
+  const setOffset = (value: number, animated: boolean = true) => {
     if (wrapperEl?.style) {
       wrapperEl.style.transform = `translateX(-${value}px)`;
       wrapperEl.style.transitionDuration = animated ? '250ms' : '0ms';
@@ -55,26 +56,27 @@ export function Swiper(attrs: any): JSX.Element {
     return true;
   };
   onMount(() => {
-    props?.onReady?.({
+    const api: OnReadyApi = {
       next: () => next(),
       prev: () => prev(),
-    });
+    };
+    props?.onReady?.(api);
   });
 
   const events = {
-    onMouseDown: (event: any) => {
+    onMouseDown: (event: MouseEvent) => {
       event.preventDefault();
       state.active = true;
       state.start = [event.clientX, event.clientY];
     },
-    onMouseMove: (event: any) => {
+    onMouseMove: (event: MouseEvent) => {
       event.preventDefault();
       if (!state.active) return;
       let diff = event.clientX - state.start[0];
       let normalOffset = offset;
       setOffset(normalOffset + -diff, false);
     },
-    onMouseUp: (event: any) => {
+    onMouseUp: (event: MouseEvent) => {
       event.preventDefault();
       if (!state.active) return;
       state.end = [event.clientX, event.clientY];
@@ -93,14 +95,13 @@ export function Swiper(attrs: any): JSX.Element {
     <>
       <div class="swiper-container">
         <div class="swiper-wrapper" ref={wrapperEl} {...events}>
-          <For
-            each={items()}
-            children={(item: any, index: any) => (
+          <For each={items()}>
+            {(item, index) => (
               <div class="swiper-slide" ref={(el) => (itemsEl[index()] = el)}>
-                {(swiperSlide() as any)(item)}
+                {attrs?.children?.(item, index)}
               </div>
             )}
-          />
+          </For>
         </div>
       </div>
       <style>{`
@@ -136,3 +137,5 @@ export function Swiper(attrs: any): JSX.Element {
     </>
   );
 }
+
+// export default Swiper;

@@ -1,15 +1,17 @@
-import { JSX, createSignal } from 'solid-js';
-import { Swiper } from '../../src/index';
+import { createSignal, Component } from 'solid-js';
+import { OnReadyApi, Swiper } from '../../src/index';
 
-export default function App(): JSX.Element {
-  const [pictures, setPictures] = createSignal([
+const App: Component = () => {
+  const demoImages = [
     { img: 'https://picsum.photos/id/10/400/200' },
     { img: 'https://picsum.photos/id/1/400/200' },
     { img: 'https://picsum.photos/id/100/400/200' },
     { img: 'https://picsum.photos/id/101/400/200' },
-  ] as any);
+  ];
+
+  const [pictures, setPictures] = createSignal(demoImages);
   const [index, setIndex] = createSignal(0);
-  let swiperApi;
+  let swiperApi: OnReadyApi;
   setTimeout(() => swiperApi?.next(), 1600);
   setTimeout(() => swiperApi?.prev(), 2000);
 
@@ -17,16 +19,23 @@ export default function App(): JSX.Element {
     <div style="width: 400px">
       <Swiper
         items={pictures()}
-        // index={index()}
+        index={index()}
         onReady={(api) => {
           swiperApi = api;
         }}
         onChange={(i) => setIndex(i)}
-        children={(item: any) => (
-          <img src={item.img} alt="" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+      >
+        {(item, index) => (
+          <img
+            src={item.img}
+            style="width: 100%; height: 100%; object-fit: cover; display: block;"
+            alt={'Item: ' + index()}
+          />
         )}
-      />
+      </Swiper>
       Active index: {index()}
     </div>
   );
-}
+};
+
+export default App;
