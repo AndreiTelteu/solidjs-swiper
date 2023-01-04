@@ -2,7 +2,6 @@ import { createSignal, For, children, splitProps, createEffect, onMount, JSX } f
 import { OnReadyApi, SwiperItemsElements, SwiperProps } from './types';
 
 export default function Swiper<P extends readonly any[], I extends JSX.Element>(attrs: SwiperProps<P, I>) {
-  // const swiperSlide = children(() => attrs.children);
   const [props, rest] = splitProps(attrs, ['items', 'threshold', 'index', 'onReady', 'onChange']);
   const items = () => props?.items || [];
   const threshold = () => props?.threshold || 80;
@@ -88,6 +87,9 @@ export default function Swiper<P extends readonly any[], I extends JSX.Element>(
         if (next()) return true;
       }
       setOffset(offset);
+    },
+    onMouseLeave: (event: MouseEvent) => {
+      events.onMouseUp(event);
     },
   };
 

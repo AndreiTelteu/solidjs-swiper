@@ -72,6 +72,10 @@ export default App;
 
 ## Changelog
 
+### v1.0.14
+
+- Fixed onMouseLeave bug
+
 ### v1.0.13
 
 - Type-safety for props and children item.
