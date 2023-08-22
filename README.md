@@ -1,5 +1,7 @@
 # solidjs-swiper
 
+[![bundlejs](https://deno.bundlejs.com/badge?q=solidjs-swiper@1.0.15&treeshake=[{+Swiper+}])](https://bundlejs.com/?q=solidjs-swiper%401.0.15&treeshake=%5B%7B+Swiper+%7D%5D)
+
 A simple image swiper built in Solid-JS. This is not Swiper.js ! it's a custom package inspired by swiper.js
 
 Demo here: https://codesandbox.io/s/solidjs-swiper-demo-2r25of?file=/src/App.tsx
@@ -71,6 +73,10 @@ export default App;
 | &#x2610; | Support for loop                                   |
 
 ## Changelog
+
+### v1.0.15
+
+- Migrated from rollup to [tsup-preset-solid](https://github.com/solidjs-community/tsup-preset-solid)
 
 ### v1.0.14
 

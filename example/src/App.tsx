@@ -1,5 +1,5 @@
 import { createSignal, Component } from 'solid-js';
-import { OnReadyApi, Swiper } from '../../src/index';
+import { OnReadyApi, Swiper } from 'solidjs-swiper';
 
 const App: Component = () => {
   const demoImages = [
